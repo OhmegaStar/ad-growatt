@@ -22,10 +22,18 @@ v.04 September 19. 2023: Charge power setting added, thanks to Jasperwolsing (ad
 
 v.041 September 26. 2023: Changed initialization to more correctly show if there's a 50x error.
 
+2024, Lots of updates to fix what was broken, it now works pretty OK.
+
 # Lovelace card
 ```
 type: entities
 entities:
+  - entity: input_boolean.adgw_inverter_on
+  - entity: input_button.adgw_set_inverter_settings_button
+  - type: divider
+  - entity: input_boolean.adgw_inverter_eps_on
+  - entity: input_button.adgw_set_inverter_eps_settings_button
+  - type: divider
   - entity: input_boolean.adgw_export_limit_on
   - entity: input_button.adgw_set_charge_settings_button_export
   - type: divider
@@ -35,18 +43,55 @@ entities:
   - entity: input_datetime.adgw_battery_first_time_slot_1_start
   - entity: input_datetime.adgw_battery_first_time_slot_1_end
   - entity: input_boolean.adgw_battery_first_time_slot_1_enabled
+  - entity: input_datetime.adgw_battery_first_time_slot_2_start
+  - entity: input_datetime.adgw_battery_first_time_slot_2_end
+  - entity: input_boolean.adgw_battery_first_time_slot_2_enabled
+  - entity: input_datetime.adgw_battery_first_time_slot_3_start
+  - entity: input_datetime.adgw_battery_first_time_slot_3_end
+  - entity: input_boolean.adgw_battery_first_time_slot_3_enabled
   - entity: input_button.adgw_set_charge_settings_button_battery_first
+  - type: divider
+  - entity: input_datetime.adgw_battery_first1_time_slot_4_start
+  - entity: input_datetime.adgw_battery_first1_time_slot_4_end
+  - entity: input_boolean.adgw_battery_first1_time_slot_4_enabled
+  - entity: input_datetime.adgw_battery_first1_time_slot_5_start
+  - entity: input_datetime.adgw_battery_first1_time_slot_5_end
+  - entity: input_boolean.adgw_battery_first1_time_slot_5_enabled
+  - entity: input_datetime.adgw_battery_first1_time_slot_6_start
+  - entity: input_datetime.adgw_battery_first1_time_slot_6_end
+  - entity: input_boolean.adgw_battery_first1_time_slot_6_enabled
+  - entity: input_button.adgw_set_charge_settings_button_battery_first1
   - type: divider
   - entity: input_select.adgw_grid_discharge_stopped_soc
   - entity: input_select.adgw_grid_discharge_power
   - entity: input_datetime.adgw_grid_first_time_slot_1_start
   - entity: input_datetime.adgw_grid_first_time_slot_1_end
   - entity: input_boolean.adgw_grid_first_time_slot_1_enabled
+  - entity: input_datetime.adgw_grid_first_time_slot_2_start
+  - entity: input_datetime.adgw_grid_first_time_slot_2_end
+  - entity: input_boolean.adgw_grid_first_time_slot_2_enabled
+  - entity: input_datetime.adgw_grid_first_time_slot_3_start
+  - entity: input_datetime.adgw_grid_first_time_slot_3_end
+  - entity: input_boolean.adgw_grid_first_time_slot_3_enabled
   - entity: input_button.adgw_set_charge_settings_button_grid_first
+  - type: divider
+  - entity: input_datetime.adgw_grid_first1_time_slot_4_start
+  - entity: input_datetime.adgw_grid_first1_time_slot_4_end
+  - entity: input_boolean.adgw_grid_first1_time_slot_4_enabled
+  - entity: input_datetime.adgw_grid_first1_time_slot_5_start
+  - entity: input_datetime.adgw_grid_first1_time_slot_5_end
+  - entity: input_boolean.adgw_grid_first1_time_slot_5_enabled
+  - entity: input_datetime.adgw_grid_first1_time_slot_6_start
+  - entity: input_datetime.adgw_grid_first1_time_slot_6_end
+  - entity: input_boolean.adgw_grid_first1_time_slot_6_enabled
+  - entity: input_button.adgw_set_charge_settings_button_grid_first1
+  - type: divider
+  - entity: input_select.adgw_load_bat_discharge_stop_soc
+  - entity: input_button.adgw_set_charge_settings_button_load_first
   - type: divider
   - entity: input_button.adgw_get_charge_settings_button
   - entity: sensor.template_adgw_api_state
-title: Inverter settings
+title: Full Inverter settings
 show_header_toggle: false
 ```
 ![image](https://github.com/KasperHolchKragelund/ad-growatt/assets/127233863/884fef5f-f24a-4b08-b74e-34e9420f763d)
