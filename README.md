@@ -22,7 +22,8 @@ v.04 September 19. 2023: Charge power setting added, thanks to Jasperwolsing (ad
 
 v.041 September 26. 2023: Changed initialization to more correctly show if there's a 50x error.
 
-2024, Lots of updates to fix what was broken, it now works pretty OK.
+2023-December -> 2024, Lots of updates to fix what was broken, add some missing functions it now works pretty OK.
+  Tested with a Growatt SPH 10k TL3 BH-UP (Hybrid) with Batteries
 
 # Lovelace card
 ```
@@ -111,7 +112,7 @@ homeassistant:
   packages: !include_dir_named packages
 ```
 
-5. Modify /config/secrets to include:
+5. Modify /config/secrets.yaml (or the /addon_configs/randomchars_appdaemon/secrets.yaml) to include:
 ```
 growatt_username: X
 growatt_password: X
@@ -165,6 +166,7 @@ The library is used entirely at your own risk.
 # Credit
 
 Credit to the original authors at  
+https://github.com/KasperHolchKragelund/ad-growatt
 https://github.com/mjdyson/ad-growatt
 https://github.com/indykoning/PyPi_GrowattServer/
 https://github.com/muppet3000/PyPi_GrowattServer/

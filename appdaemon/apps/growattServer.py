@@ -24,10 +24,10 @@ class Timespan(IntEnum):
     month = 2
 
 class GrowattApi:
-    server_url = 'https://server-api.growatt.com/'
+    server_url = 'https://openapi.growatt.com/'
     agent_identifier = "Dalvik/2.1.0 (Linux; U; Android 12; https://github.com/indykoning/PyPi_GrowattServer)"
 
-    def __init__(self, add_random_user_id=False, agent_identifier=None):
+    def __init__(self, add_random_user_id=True, agent_identifier=None):
         if (agent_identifier != None):
             self.agent_identifier = agent_identifier
 
@@ -129,6 +129,15 @@ class GrowattApi:
             'userName': username,
             'password': password
         })
+#debugging
+        if response.status_code == 403:
+            data = {}
+            data["msg"] = '403 Forbidden during Login / Session Creation'
+            data['success'] = False
+            data['response'] = response
+            return data
+#debugging
+
         data = json.loads(response.content.decode('utf-8'))['back']
         if data['success']:
             data.update({
@@ -264,7 +273,7 @@ class GrowattApi:
         }
 
         if (plant_id):
-          request_params['plantId'] = plant_id
+            request_params['plantId'] = plant_id
 
         response = self.session.get(self.get_url('newMixApi.do'), params=request_params)
 
@@ -629,11 +638,228 @@ class GrowattApi:
     def get_mix_inverter_settings(self, serial_number):
 
         """
-        Gets the inverter settings related to battery modes
+        Gets the inverter settings related to grid first, battery first modes
         Keyword arguments:
         serial_number -- The serial number (device_sn) of the inverter
         Returns:
         A dictionary of settings
+        Below values is from a SPH 10000TL3 BH-UP Inverter
+        {
+            'deviceType': 0,
+            'msg': 'msg',
+            'result': 1,    --1 = success 
+            'dtc': 0,
+            'haveMeter': 0,
+            'obj': {
+                'mixBean': {
+                    'mix_ac_discharge_frequency': '0',
+                    'communicationVersion': 'ZDAa-0089',
+                    'singleExport': '0',
+                    'dischargeTime3': None,
+                    'bagingTestStep': '0',
+                    'chargePowerCommand': '100',    --Battery First Charge Power Limit (0..100)
+                    'uwLVRT2EE': '0.0',
+                    'ccCurrent': '25.0',
+                    'dischargeTime2': None,
+                    'dischargeTime1': None,
+                    'record': None,
+                    'deviceType': '1',
+                    'vbatStartforCharge': '1.45',
+                    'uwHFRTTime2EE': '0',
+                    'uwReconnectStartSlope': '0.0',
+                    'outPower': '5.0',
+                    'powerMaxText': '',
+                    'backUpEn': '0',
+                    'cvVoltage': '14.5',
+                    'pv_pf_cmd_memory_state': '1',
+                    'energyMonth': '0.0',
+                    'acChargeEnable': '1',      --Battery First AC Charging 1 == Enabled, 0 == Disabled
+                    'uwHFRTEE': '0.0',
+                    'reactiveRate': '100',
+                    'loadFirstStopSocSet': '98',    --Load First Battery SOC Stop Discharge limit (0..100)
+                    'inPower': '20.0',
+                    'powerMaxTime': None,
+                    'vbatWarnClr': '5.0',
+                    'forcedDischargeTimeStop2': '0:0',
+                    'uwHFRT2EE': '0.0',
+                    'forcedDischargeTimeStop3': '0:0',
+                    'forcedDischargeTimeStop1': '0:0',
+                    'forcedDischargeTimeStop6': '0:6',
+                    'modbusVersion': '305',
+                    'forcedDischargeTimeStop4': '0:0',
+                    'buckUPSVoltSet': '0',
+                    'forcedDischargeTimeStop5': '0:0',
+                    'plantId': '0',
+                    'exportLimit': '0',     --1 == Export LImitation Enabled, 0 == Disabled 
+                    'energyMonthText': '0',
+                    'vbatStopForCharge': '5.75',
+                    'v1': '211.0',
+                    'dataLogSn': 'ABCDE123456', -- a dataloggers alphanumeric serial number
+                    'v2': '207.0',
+                    'v3': '253.0',
+                    'batteryType': '1',
+                    'v4': '248.0',
+                    'innerVersion': 'YBAA040489',
+                    'groupId': '-1',
+                    'pv_grid_voltage_high': '438.2',
+                    'batFirstSwitch3': '0',
+                    'forcedChargeTimeStop1': '2:0',     -- Battery First Time Slot 1 End (HH:MM)
+                    'priorityChoose': '0',
+                    'vbatStartForDischarge': '1.15',
+                    'forcedChargeTimeStop2': '6:0',     -- Battery First Time Slot 2 End (HH:MM)
+                    'forcedChargeTimeStop3': '0:0',     -- Battery First Time Slot 3 End (HH:MM)
+                    'pv_active_p_rate': '100',
+                    'batFirstSwitch2': '0',
+                    'batFirstSwitch1': '0',
+                    'countrySelected': '0',
+                    'forcedChargeTimeStop4': '0:0',    -- Battery First 1 Time Slot 4 End (HH:MM)
+                    'forcedChargeTimeStop5': '0:0',     -- Battery First 1 Time Slot 5 End (HH:MM)
+                    'forcedChargeTimeStop6': '0:0',     -- Battery First 1 Time Slot 6 End (HH:MM)
+                    'pvPfCmdMemoryState': '1',
+                    'sgipEn': '0',
+                    'epsFunEn': '0',    --1 == EPS (power when grid is missing mode) Enabled, 0 == Disabled
+                    'uwLFRTTimeEE': '0',
+                    'imgPath': './css/img/status_green.gif',
+                    'region': '0',
+                    'uwHVRT2EE': '0.0',
+                    'lastUpdateTime': 'Wed Dec 20 06:09:18 CST 2023',
+                    'pmax': '10000',
+                    'uspFreqSet': '0',
+                    'tcpServerIp': '47.91.95.95',
+                    'wselectBaudrate': '0',
+                    'uwLVRT3EE': '0.0',
+                    'epsFreqSet': '1',
+                    'activeRate': '100',
+                    'batSysRateEnergy': '0.0',
+                    'invVersion': '1',
+                    'batTempLowerLimitC': '110.0',
+                    'batTempLowerLimitD': '110.0',
+                    'userName': None,
+                    'comAddress': '1',
+                    'pv_reactive_p_rate': '100',
+                    'uwLVRTTimeEE': '0',
+                    'uwHFRTTimeEE': '0',
+                    'bctAdjust': '3',
+                    'chargeTime3': None,
+                    'chargeTime2': None,
+                    'energyDay': '0.0',
+                    'chargeTime1': None,
+                    'statusText': 'mix.status.normal',
+                    'forcedChargeTimeStart2': '4:0',    --Battery First Charge Time Slot 2 Start (HH:MM)
+                    'forcedChargeTimeStart3': '0:0',    --Battery First Charge Time Slot 3 Start (HH:MM)
+                    'batParallelNum': '0',
+                    'location': '',
+                    'forcedChargeTimeStart1': '1:0',    --Battery First Charge Time Slot 1 Start (HH:MM)
+                    'vnormal': '360.0',
+                    'forcedChargeTimeStart6': '0:0',    --Battery First 1 Charge Time Slot 6 Start (HH:MM)
+                    'forcedChargeTimeStart4': '0:0',    --Battery First 1 Charge Time Slot 4 Start (HH:MM)
+                    'forcedChargeTimeStart5': '0:0',    --Battery First 1 Charge Time Slot 5 Start (HH:MM)
+                    'plantname': None,
+                    'vbatWarning': '11.0',
+                    'mcVersion': 'QBAa-8306',
+                    'gridFirstSwitch1': '0',
+                    'gridFirstSwitch2': '0',
+                    'bctMode': '3',
+                    'gridFirstSwitch3': '0',
+                    'lcdLanguage': '1',
+                    'pv_reactive_p_rate_two': 'over',
+                    'children': None,
+                    'lost': 'false',
+                    'safety': '1b',
+                    'model': '28547293900000',
+                    'id': '0',
+                    'uwHVRTTimeEE': '0',
+                    'buckUpsFunEn': '0',
+                    'voltageLowLimit': '338.6',
+                    'serialNum': 'ABC12345',      --Inverter Serial Number
+                    'uwLVRTTime2EE': '0',
+                    'disChargePowerCommand': '100',
+                    'powerMax': None,
+                    'forcedDischargeStopSwitch2': '0',      --Grid First Time Slot 2, 1 == Enabled, 0 == Disabled
+                    'forcedDischargeStopSwitch1': '0',      --Grid First Time Slot 1, 1 == Enabled, 0 == Disabled
+                    'forcedDischargeStopSwitch6': '0',      --Grid First 1 Time Slot 6, 1 == Enabled, 0 == Disabled
+                    'loadFirstControl': '0',                --?? Maybe controls forcing Load First Behaviour???
+                    'uwHVRTEE': '0.0',
+                    'forcedDischargeStopSwitch5': '2',      --Grid First 1 Time Slot 5, 1 == Enabled, 0 == Disabled
+                    'forcedDischargeStopSwitch4': '0',      --Grid First 1 Time Slot 4, 1 == Enabled, 0 == Disabled
+                    'forcedDischargeStopSwitch3': '0',      --Grid First Time Slot 3, 1 == Enabled, 0 == Disabled
+                    'status': '6',
+                    'pv_power_factor': '0.0',
+                    'reactiveDelay': '3.0',
+                    'parentID': 'LIST_XGD6CBD0A2_96',
+                    'manufacturer': '   New Energy   ',
+                    'treeID': 'ST_ABCD12345',      --Contains the Inverter Serial NUmber, Prefixed by ST ??
+                    'sysTime': '2023-12-19 21:11:58',
+                    'uwLFRTEE': '0.0',
+                    'onOff': '1',       --Inverter On / Off, 1 == On, 0 == Off
+                    'forcedDischargeTimeStart1': '0:0',     --Grid First Time Slot 1 Start Time (HH:MM)
+                    'mix_off_grid_enable': '0',
+                    'forcedDischargeTimeStart3': '0:0',     --Grid First Time Slot 3 Start Time (HH:MM)
+                    'forcedDischargeTimeStart2': '0:0',     --Grid First Time Slot 2 Start Time (HH:MM)
+                    'forcedDischargeTimeStart5': '0:0',     --Grid First 1 Time Slot 45 Start Time (HH:MM)
+                    'forcedDischargeTimeStart4': '0:0',     --Grid First 1 Time Slot 4 Start Time (HH:MM)
+                    'batSerialNum': None,
+                    'exportLimitPowerRate': '0.0',          --Related to exportLimit
+                    'forcedDischargeTimeStart6': '0:0',     --Grid First 1 Time Slot 6 Start Time (HH:MM)
+                    'oldErrorFlag': '170',
+                    'floatChargeCurrentLimit': '2.5',
+                    'newSwVersionFlag': '0',
+                    'uwLFRTTime2EE': '0',
+                    'uwNominalGridVolt': '0.0',
+                    'mix_ac_discharge_voltage': '0',
+                    'forcedChargeStopSwitch2': '1',     --Battery First Time Slot 2, 1 == Enabled, 0 == Disabled 
+                    'forcedChargeStopSwitch1': '0',     --Battery First Time Slot 1, 1 == Enabled, 0 == Disabled 
+                    'uwLVRTEE': '0.0',
+                    'forcedChargeStopSwitch6': '0',     --Battery First 1 Time Slot 6, 1 == Enabled, 0 == Disabled
+                    'forcedChargeStopSwitch5': '0',     --Battery First 1 Time Slot 5, 1 == Enabled, 0 == Disabled 
+                    'forcedChargeStopSwitch4': '0',     --Battery First 1 Time Slot 4, 1 == Enabled, 0 == Disabled 
+                    'forcedChargeStopSwitch3': '0',     --Battery First Time Slot 3, 1 == Enabled, 0 == Disabled 
+                    'updating': 'false',
+                    'batSeriesNum': '12',
+                    'lastUpdateTimeText': '2023-12-20 06:09:18',
+                    'vbatStopForDischarge': '4.7',
+                    'wdisChargeSOCLowLimit2': '10',     --Grid First Battery Discharge Stop SOC (0..100)
+                    'wdisChargeSOCLowLimit1': '100',    --Gridt First Battery Dischatrge Effect Limit (0..100)
+                    'wchargeSOCLowLimit1': '100',
+                    'wchargeSOCLowLimit2': '100',       --Battery First Charge SOC Limit (0..100)
+                    'epsVoltSet': '0',
+                    'level': '4',
+                    'uwGridWattDelay': '0',
+                    'pCharge': '0.0',
+                    'batTempUpperLimitC': '60.0',
+                    'pv_on_off': '1',
+                    'uwHVRTTime2EE': '0',
+                    'batTempUpperLimitD': '70.0',
+                    'pv_grid_voltage_low': '338.6',
+                    'powerFactor': '0.0',
+                    'sysTimeText': '2023-12-19 21:11:58',
+                    'underExcited': '0',
+                    'timezone': '8.0',
+                    'voltageHighLimit': '438.2',
+                    'portName': 'port_name',
+                    'modelText': 'A1B1D0T3PFU8MASB',
+                    'dtc': '3601',
+                    'treeName': 'ABCD12345',   --seems to be same value as the serial of the inverter
+                    'monitorVersion': 'ZEAa-8204',
+                    'alias': 'ABCD12345',  --default is the serial of the inverter, alternatively the alias set for the inverter
+                    'fwVersion': 'YA1.0',
+                    'addr': '1',
+                    'pDischarge': '0.0',
+                    'uwLFRT2EE': '0.0',
+                    'failsafe': '1',
+                    'uwLVRTTime3EE': '0',
+                    'lvVoltage': '11.5',
+                    'vppOpen': '160',
+                    'reactivePowerLimit': '43.0',
+                    'pf_sys_year': '2023-12-19 21:11:58',   --inverters system date & time
+                    'backflow_setting': '0'
+                }
+            },
+            'normalPower': 0,
+            'model': ''
+        }
+
+
         """
 
         default_params = {

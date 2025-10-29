@@ -1,15 +1,36 @@
 input_button:
+  adgw_get_mix_system_status_button:
+    name: adgw_get_mix_system_status_button
+    icon: mdi:import
+  adgw_get_charge_settings_button_cache:
+    name: adgw_get_charge_settings_button_cache
+    icon: mdi:import
   adgw_get_charge_settings_button: # button to get charge settings
     name: adgw_get_charge_settings_button
     icon: mdi:import
+  adgw_set_inverter_settings_button: # button to set inverter settings
+    name: adgw_set_inverter_settings_button
+    icon: mdi:export
+  adgw_set_inverter_eps_settings_button: # button to set inverter EPS settings
+    name: adgw_set_inverter_eps_settings_button
+    icon: mdi:export
   adgw_set_charge_settings_button_export: # button to set charge settings
     name: adgw_set_charge_settings_button_export
     icon: mdi:export
   adgw_set_charge_settings_button_battery_first: # button to set charge settings
     name: adgw_set_charge_settings_button_battery_first
     icon: mdi:export
+  adgw_set_charge_settings_button_battery_first1: # button to set charge settings
+    name: adgw_set_charge_settings_button_battery_first1
+    icon: mdi:export
   adgw_set_charge_settings_button_grid_first: # button to set charge settings
     name: adgw_set_charge_settings_button_grid_first
+    icon: mdi:export
+  adgw_set_charge_settings_button_grid_first1: # button to set charge settings
+    name: adgw_set_charge_settings_button_grid_first1
+    icon: mdi:export
+  adgw_set_charge_settings_button_load_first: # button to set load settings
+    name: adgw_set_charge_settings_button_load_first
     icon: mdi:export
 
 input_select:
@@ -78,8 +99,24 @@ input_select:
       - "90"
       - "100"
 
+  adgw_load_bat_discharge_stop_soc: #load first discharge stopped SOC
+    name: adgw_load_bat_discharge_stop_soc
+    icon: mdi:battery-bluetooth
+    options:
+      - "0"
+      - "10"
+      - "20"
+      - "30"
+      - "40"
+      - "50"
+      - "60"
+      - "70"
+      - "80"
+      - "90"
+      - "100"
+
 input_datetime:
-  adgw_battery_first_time_slot_1_end: # battery first, time inputs
+  adgw_battery_first_time_slot_1_end: # battery first, time 1 inputs
     name: adgw_battery_first_time_slot_1_end
     icon: mdi:battery-clock
     has_date: false
@@ -90,7 +127,64 @@ input_datetime:
     has_date: false
     has_time: true
 
-  adgw_grid_first_time_slot_1_end: # grid first, time inputs
+  adgw_battery_first_time_slot_2_end: # battery first, time 2 inputs
+    name: adgw_battery_first_time_slot_2_end
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+  adgw_battery_first_time_slot_2_start:
+    name: adgw_battery_first_time_slot_2_start
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+
+  adgw_battery_first_time_slot_3_end: # battery first, time 3 inputs
+    name: adgw_battery_first_time_slot_3_end
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+  adgw_battery_first_time_slot_3_start:
+    name: adgw_battery_first_time_slot_3_start
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+
+  adgw_battery_first1_time_slot_4_end: # battery first 1, time 4 inputs
+    name: adgw_battery_first1_time_slot_4_end
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+  adgw_battery_first1_time_slot_4_start:
+    name: adgw_battery_first1_time_slot_4_start
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+
+  adgw_battery_first1_time_slot_5_end: # battery first 1, time 5 inputs
+    name: adgw_battery_first1_time_slot_5_end
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+  adgw_battery_first1_time_slot_5_start:
+    name: adgw_battery_first1_time_slot_5_start
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+
+  adgw_battery_first1_time_slot_6_end: # battery first 1, time 6 inputs
+    name: adgw_battery_first1_time_slot_6_end
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+  adgw_battery_first1_time_slot_6_start:
+    name: adgw_battery_first1_time_slot_6_start
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+
+    #Grid First
+
+  adgw_grid_first_time_slot_1_end: # grid first, time 1 inputs
     name: adgw_grid_first_time_slot_1_end
     icon: mdi:battery-clock
     has_date: false
@@ -101,7 +195,68 @@ input_datetime:
     has_date: false
     has_time: true
 
+  adgw_grid_first_time_slot_2_end: # grid first, time 2 inputs
+    name: adgw_grid_first_time_slot_2_end
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+  adgw_grid_first_time_slot_2_start:
+    name: adgw_grid_first_time_slot_2_start
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+
+  adgw_grid_first_time_slot_3_end: # grid first, time 3 inputs
+    name: adgw_grid_first_time_slot_3_end
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+  adgw_grid_first_time_slot_3_start:
+    name: adgw_grid_first_time_slot_3_start
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+
+  adgw_grid_first1_time_slot_4_end: # grid first1, time 4 inputs
+    name: adgw_grid_first1_time_slot_4_end
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+  adgw_grid_first1_time_slot_4_start:
+    name: adgw_grid_first1_time_slot_4_start
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+
+  adgw_grid_first1_time_slot_5_end: # grid first1, time 5 inputs
+    name: adgw_grid_first1_time_slot_5_end
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+  adgw_grid_first1_time_slot_5_start:
+    name: adgw_grid_first1_time_slot_5_start
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+
+  adgw_grid_first1_time_slot_6_end: # grid first1, time 6 inputs
+    name: adgw_grid_first1_time_slot_6_end
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+  adgw_grid_first1_time_slot_6_start:
+    name: adgw_grid_first1_time_slot_6_start
+    icon: mdi:battery-clock
+    has_date: false
+    has_time: true
+
 input_boolean:
+  adgw_inverter_on:
+    name: adgw_inverter_on
+    icon: mdi:toggle-switch-outline
+  adgw_inverter_eps_on:
+    name: adgw_inverter_eps_on
+    icon: mdi:toggle-switch-outline
   adgw_export_limit_on:
     name: adgw_export_limit_on
     icon: mdi:toggle-switch-outline
@@ -111,8 +266,39 @@ input_boolean:
   adgw_battery_first_time_slot_1_enabled: # switch, battery first
     name: adgw_battery_first_time_slot_1_enabled
     icon: mdi:toggle-switch-outline
+  adgw_battery_first_time_slot_2_enabled: # switch, battery first
+    name: adgw_battery_first_time_slot_2_enabled
+    icon: mdi:toggle-switch-outline
+  adgw_battery_first_time_slot_3_enabled: # switch, battery first
+    name: adgw_battery_first_time_slot_3_enabled
+    icon: mdi:toggle-switch-outline
+  adgw_battery_first1_time_slot_4_enabled: # switch, battery first
+    name: adgw_battery_first1_time_slot_4_enabled
+    icon: mdi:toggle-switch-outline
+  adgw_battery_first1_time_slot_5_enabled: # switch, battery first
+    name: adgw_battery_first1_time_slot_5_enabled
+    icon: mdi:toggle-switch-outline
+  adgw_battery_first1_time_slot_6_enabled: # switch, battery first
+    name: adgw_battery_first1_time_slot_6_enabled
+    icon: mdi:toggle-switch-outline
+
   adgw_grid_first_time_slot_1_enabled: # switch, grid first
     name: adgw_grid_first_time_slot_1_enabled
+    icon: mdi:toggle-switch-outline
+  adgw_grid_first_time_slot_2_enabled: # switch, grid first
+    name: adgw_grid_first_time_slot_2_enabled
+    icon: mdi:toggle-switch-outline
+  adgw_grid_first_time_slot_3_enabled: # switch, grid first
+    name: adgw_grid_first_time_slot_3_enabled
+    icon: mdi:toggle-switch-outline
+  adgw_grid_first1_time_slot_4_enabled: # switch, grid first
+    name: adgw_grid_first1_time_slot_4_enabled
+    icon: mdi:toggle-switch-outline
+  adgw_grid_first1_time_slot_5_enabled: # switch, grid first
+    name: adgw_grid_first1_time_slot_5_enabled
+    icon: mdi:toggle-switch-outline
+  adgw_grid_first1_time_slot_6_enabled: # switch, grid first
+    name: adgw_grid_first1_time_slot_6_enabled
     icon: mdi:toggle-switch-outline
 
 script:
@@ -163,6 +349,28 @@ script:
           entity_id: input_button.adgw_set_charge_settings_button_battery_first
     mode: single
     icon: "mdi:toggle-switch-outline"
+  adgw_set_battery_first_ac_charge_off:
+    alias: adgw_set_battery_first_ac_charge_off
+    sequence:
+      - service: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.adgw_ac_charge_on
+      - service: input_button.press
+        target:
+          entity_id: input_button.adgw_set_charge_settings_button_battery_first
+    mode: single
+    icon: "mdi:toggle-switch-outline"
+  adgw_set_battery_first_ac_charge_on:
+    alias: adgw_set_battery_first_ac_charge_on
+    sequence:
+      - service: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.adgw_ac_charge_on
+      - service: input_button.press
+        target:
+          entity_id: input_button.adgw_set_charge_settings_button_battery_first
+    mode: single
+    icon: "mdi:toggle-switch-outline"
 
 template:
   - sensor:
@@ -181,6 +389,10 @@ homeassistant:
   customize:
     input_boolean.adgw_export_limit_on:
       friendly_name: Export Limit On
+    input_boolean.adgw_inverter_on:
+      friendly_name: Inverter On
+    input_boolean.adgw_inverter_eps_on:
+      friendly_name: Inverter EPS On
 
     # battery first
     input_select.adgw_battery_charge_max_soc:
@@ -196,6 +408,42 @@ homeassistant:
     input_boolean.adgw_battery_first_time_slot_1_enabled:
       friendly_name: Battery First - Time Slot 1 Enabled
 
+    input_datetime.adgw_battery_first_time_slot_2_end:
+      friendly_name: Battery First - Time Slot 2 (End)
+    input_datetime.adgw_battery_first_time_slot_2_start:
+      friendly_name: Battery First - Time Slot 2 (Start)
+    input_boolean.adgw_battery_first_time_slot_2_enabled:
+      friendly_name: Battery First - Time Slot 2 Enabled
+
+    input_datetime.adgw_battery_first_time_slot_3_end:
+      friendly_name: Battery First - Time Slot 3 (End)
+    input_datetime.adgw_battery_first_time_slot_3_start:
+      friendly_name: Battery First - Time Slot 3 (Start)
+    input_boolean.adgw_battery_first_time_slot_3_enabled:
+      friendly_name: Battery First - Time Slot 3 Enabled
+
+    # battery first1
+    input_datetime.adgw_battery_first1_time_slot_4_end:
+      friendly_name: Battery First 1 - Time Slot 4 (End)
+    input_datetime.adgw_battery_first1_time_slot_4_start:
+      friendly_name: Battery First 1 - Time Slot 4 (Start)
+    input_boolean.adgw_battery_first1_time_slot_4_enabled:
+      friendly_name: Battery First 1 - Time Slot 4 Enabled
+
+    input_datetime.adgw_battery_first1_time_slot_5_end:
+      friendly_name: Battery First 1 - Time Slot 5 (End)
+    input_datetime.adgw_battery_first1_time_slot_5_start:
+      friendly_name: Battery First 1 - Time Slot 5 (Start)
+    input_boolean.adgw_battery_first1_time_slot_5_enabled:
+      friendly_name: Battery First 1 - Time Slot 5 Enabled
+
+    input_datetime.adgw_battery_first1_time_slot_6_end:
+      friendly_name: Battery First 1 - Time Slot 6 (End)
+    input_datetime.adgw_battery_first1_time_slot_6_start:
+      friendly_name: Battery First 1 - Time Slot 6 (Start)
+    input_boolean.adgw_battery_first1_time_slot_6_enabled:
+      friendly_name: Battery First 1 - Time Slot 6 Enabled
+
     # grid first
     input_select.adgw_grid_discharge_stopped_soc:
       friendly_name: Discharge Stopped SoC
@@ -208,14 +456,68 @@ homeassistant:
     input_boolean.adgw_grid_first_time_slot_1_enabled:
       friendly_name: Grid First - Time Slot 1 Enabled
 
+    input_datetime.adgw_grid_first_time_slot_2_end:
+      friendly_name: Grid First - Time Slot 2 (End)
+    input_datetime.adgw_grid_first_time_slot_2_start:
+      friendly_name: Grid First - Time Slot 2 (Start)
+    input_boolean.adgw_grid_first_time_slot_2_enabled:
+      friendly_name: Grid First - Time Slot 2 Enabled
+
+    input_datetime.adgw_grid_first_time_slot_3_end:
+      friendly_name: Grid First - Time Slot 3 (End)
+    input_datetime.adgw_grid_first_time_slot_3_start:
+      friendly_name: Grid First - Time Slot 3 (Start)
+    input_boolean.adgw_grid_first_time_slot_3_enabled:
+      friendly_name: Grid First - Time Slot 3 Enabled
+
+    # grid first1
+    input_datetime.adgw_grid_first1_time_slot_4_end:
+      friendly_name: Grid First 1 - Time Slot 4 (End)
+    input_datetime.adgw_grid_first1_time_slot_4_start:
+      friendly_name: Grid First 1 - Time Slot 4 (Start)
+    input_boolean.adgw_grid_first1_time_slot_4_enabled:
+      friendly_name: Grid First 1 - Time Slot 4 Enabled
+
+    input_datetime.adgw_grid_first1_time_slot_5_end:
+      friendly_name: Grid First 1 - Time Slot 5 (End)
+    input_datetime.adgw_grid_first1_time_slot_5_start:
+      friendly_name: Grid First 1 - Time Slot 5 (Start)
+    input_boolean.adgw_grid_first1_time_slot_5_enabled:
+      friendly_name: Grid First 1 - Time Slot 5 Enabled
+
+    input_datetime.adgw_grid_first1_time_slot_6_end:
+      friendly_name: Grid First 1 - Time Slot 6 (End)
+    input_datetime.adgw_grid_first1_time_slot_6_start:
+      friendly_name: Grid First 1 - Time Slot 6 (Start)
+    input_boolean.adgw_grid_first1_time_slot_6_enabled:
+      friendly_name: Grid First 1 - Time Slot 6 Enabled
+
+    # load first
+    input_select.adgw_load_bat_discharge_stop_soc:
+      friendly_name: Discharge Stopped SoC (Load)
+
     # buttons etc
     sensor.template_adgw_api_state:
       friendly_name: API status
+    input_button.adgw_get_mix_system_status_button:
+      friendly_name: Load mix system status from Server CACHED
+    input_button.adgw_get_charge_settings_button_cache:
+      friendly_name: Load charge settings from Server CACHED
     input_button.adgw_get_charge_settings_button:
       friendly_name: Load charge settings from Server
+    input_button.adgw_set_inverter_settings_button:
+      friendly_name: Save inverter settings
+    input_button.adgw_set_inverter_eps_settings_button:
+      friendly_name: Save inverter EPS settings
     input_button.adgw_set_charge_settings_button_export:
       friendly_name: Save export limit settings
     input_button.adgw_set_charge_settings_button_battery_first:
       friendly_name: Save battery first settings
+    input_button.adgw_set_charge_settings_button_battery_first1:
+      friendly_name: Save battery first 1 settings
     input_button.adgw_set_charge_settings_button_grid_first:
       friendly_name: Save grid first settings
+    input_button.adgw_set_charge_settings_button_grid_first1:
+      friendly_name: Save grid first 1 settings
+    input_button.adgw_set_charge_settings_button_load_first:
+      friendly_name: Save load first settings
