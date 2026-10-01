@@ -12,15 +12,15 @@ This is a further development of the original code by mjdyson, indykoening and K
 !! I'm no longer using this code very much. I've moved to a combination of esphome control using my public repo https://github.com/OhmegaStar/esphome-for-growatt, as well as solaX for Growatt. !!
 
 ## Releases
-Latest release: **v0.1.0** (released 2026-10-01)
+Release payloads are limited to the `appdaemon/` and `packages/` directories. Those folders are the deployable Home Assistant AppDaemon integration content; repo maintenance files are not part of the release payload.
 
-See [CHANGELOG.md](CHANGELOG.md) for release history. To publish a release, commit all intended changes and run with the next version number, for example:
+To publish a release, commit only the intended AppDaemon/package changes and run:
 
 ```powershell
 pwsh -File .\tools\release.ps1 -Version 0.1.1
 ```
 
-Use `-Push` when you are ready to push the release commit and tag; GitHub Actions will generate the GitHub release notes from the tag push.
+Use `-Push` when you are ready to push the release tag. The release helper builds a deployment archive from `appdaemon/` and `packages/` only.
 
 # Versions
 v0.1 July 13. 2023: initial release
@@ -115,7 +115,7 @@ The steps to set up is:
 
 2. Install AppDaemon from Add-ons in HA
 
-3. Copy files from ad-growatt on Github to your config directory (/config on my HA Yellow, will use this path going foroward, but it might be different on your installation)
+3. Copy files from ad-growatt on Github (you only need the appdaemon/ and packages/ content) to your config directory  (/config on my HA Yellow, will use this path going foroward, but it might be different on your installation)
 
 4. Modify /config/configuration.yaml to include
 ```

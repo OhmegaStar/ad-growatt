@@ -15,14 +15,15 @@
 - Maintain the active task list in `TODO.md` and keep it updated as work progresses.
 - Use `CHANGELOG.md` for notable changes and release history.
 - Use `tools/release.ps1` to prepare and publish tagged releases using Semantic Versioning.
-- The README should include the current `Latest release:` line and the release instructions.
+- The release payload is limited to the `appdaemon/` and `packages/` directories. Files outside those folders are repo maintenance files and are not part of a deployable release payload unless intentionally added.
 
 ## Release process
 1. Commit the intended changes.
-2. Run the release helper:
+2. Ensure the diff for the release is limited to `appdaemon/` and `packages/`.
+3. Run the release helper:
    `pwsh -File .\tools\release.ps1 -Version 0.1.1`
-3. Use `-Push` only when ready to create and push the tag.
-4. The GitHub Action in `.github/workflows/release.yml` will create the GitHub Release from the tag.
+4. Use `-Push` only when ready to create and push the tag.
+5. The GitHub Action in `.github/workflows/release.yml` will create the GitHub Release from the tag.
 
 ## Safety notes
 - This code interacts directly with inverter settings and can affect system behavior; avoid changing safety-critical defaults without explicit justification.

@@ -48,54 +48,29 @@ try {
         throw 'No commits found since the previous release.'
     }
 
-    $readmePath = Join-Path (Get-Location) 'README.md'
-    $changelogPath = Join-Path (Get-Location) 'CHANGELOG.md'
-
-    $readme = [System.IO.File]::ReadAllText($readmePath)
-    $changelog = [System.IO.File]::ReadAllText($changelogPath)
-    $marker = '(?m)^Latest release:.*$'
-    if ([regex]::Matches($readme, $marker).Count -ne 1) {
-        throw 'README.md must contain exactly one "Latest release:" line.'
+    $changedFiles = @(Invoke-Git -Arguments @('diff', '--name-only', $commitRange))
+    $nonReleaseFiles = @($changedFiles | Where-Object {
+        $_ -and $_ -notmatch '^(appdaemon/|packages/)' }
+    )
+    if ($nonReleaseFiles.Count -gt 0) {
+        throw "Release scope is limited to appdaemon/ and packages/. Remove or move these files before releasing: $($nonReleaseFiles -join ', ')"
     }
 
-    $versionHeading = [regex]::Match($changelog, '(?m)^## \[[0-9]+\.[0-9]+\.[0-9]+\] - ')
-    if (-not $versionHeading.Success) {
-        throw 'CHANGELOG.md must contain at least one dated version section.'
+    $distPath = Join-Path (Get-Location) 'dist'
+    New-Item -ItemType Directory -Path $distPath -Force | Out-Null
+    $archivePath = Join-Path $distPath "ad-growatt-$Version.zip"
+    if (Test-Path $archivePath) {
+        Remove-Item $archivePath -Force
     }
 
-    $date = Get-Date -Format 'yyyy-MM-dd'
-    $updatedReadme = ([regex]::new($marker)).Replace(
-        $readme,
-        "Latest release: **$tag** (released $date)",
-        1
-    )
+    Compress-Archive -Path @(
+        (Join-Path (Get-Location) 'appdaemon'),
+        (Join-Path (Get-Location) 'packages')
+    ) -DestinationPath $archivePath -Force
 
-    $newline = if ($changelog.Contains("`r`n")) { "`r`n" } else { "`n" }
-    $entryLines = @(
-        "## [$Version] - $date",
-        '',
-        '### Added',
-        '### Changed',
-        '### Fixed',
-        ''
-    ) + $commitMessages + @('')
-    $changelogEntry = [string]::Join($newline, [string[]]$entryLines)
-    $updatedChangelog = $changelog.Insert($versionHeading.Index, $changelogEntry)
+    Write-Host "Prepared release payload: $archivePath"
 
-    [System.IO.File]::WriteAllText(
-        $readmePath,
-        $updatedReadme,
-        [System.Text.UTF8Encoding]::new($false)
-    )
-    [System.IO.File]::WriteAllText(
-        $changelogPath,
-        $updatedChangelog,
-        [System.Text.UTF8Encoding]::new($false)
-    )
-
-    Invoke-Git -Arguments @('diff', '--check') | Out-Null
-    Invoke-Git -Arguments @('add', '--', 'README.md', 'CHANGELOG.md') | Out-Null
-    Invoke-Git -Arguments @('commit', '-m', "Release $tag") | Out-Null
+    Invoke-Git -Arguments @('commit', '--allow-empty', '-m', "Release $tag") | Out-Null
     Invoke-Git -Arguments @('tag', $tag) | Out-Null
 
     if ($Push) {
