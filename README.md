@@ -2,14 +2,25 @@
 
 An AppDaemon App Example for controlling Growatt Inverters via HomeAssistant.
 
-This is a further development of the original code by mjdyson. The following are the main changes:
+This is a further development of the original code by mjdyson, indykoening and KasperHolchKragelund The following are the main changes:
 - Ability to control Grid First, Battery First and Export Limit
 - UI now consists of one Lovelace card
 - Improved error handling, eg. handling the lock-out by displaying a message
 - Can only handle one inverter, specify Device Serial Number in secrets together with username and password for inverter
+- Works with growatt, but doing many frequent calls on this api, will get a temporary rate limit, or account block - it usually clears in a few hours. for normal day to day operations it works ok.
 
-!! Growatt API was updated during September 2023. That update pretty much broke all Growatt integrations. Growatt is not offering any solutions, they focus on blocking enthusiast trying to make Growatt products work with home automation. Currently this code (AD Growatt) is not working due to Growatt servers blocking access. It might work again some time in the future and everyone are very welcome to try to use my code for future versions.
-Personally I gave up on Growatt servers and will be using Solar Assistant going forward. So Long, and Thanks for All the Fish :)
+!! I'm no longer using this code very much. I've moved to a combination of esphome control using my public repo https://github.com/OhmegaStar/esphome-for-growatt, as well as solaX for Growatt. !!
+
+## Releases
+Latest release: **v0.1.0** (released 2026-10-01)
+
+See [CHANGELOG.md](CHANGELOG.md) for release history. To publish a release, commit all intended changes and run with the next version number, for example:
+
+```powershell
+pwsh -File .\tools\release.ps1 -Version 0.1.1
+```
+
+Use `-Push` when you are ready to push the release commit and tag; GitHub Actions will generate the GitHub release notes from the tag push.
 
 # Versions
 v0.1 July 13. 2023: initial release
@@ -100,7 +111,7 @@ show_header_toggle: false
 # Installation
 The steps to set up is:
 
-1. If you have the old Growatt integration installed, remove it, as it might trigger the server block on Growatt servers. For monitoring, use Grott https://github.com/johanmeijer/grott. This step is optional but will improve stability greatly.
+1. If you have the old Growatt integration installed, remove it, as it might trigger the server block on Growatt servers. 
 
 2. Install AppDaemon from Add-ons in HA
 
